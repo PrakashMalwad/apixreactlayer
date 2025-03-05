@@ -1,8 +1,26 @@
-# React + Vite
+# APIX Desktop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+APIX Desktop is a simple yet powerful API testing tool built with Electron. It allows users to send API requests and inspect responses seamlessly.
 
-Currently, two official plugins are available:
+## Features
+- Send GET, POST, PUT, DELETE requests
+- View response status, headers, and body
+- Save and organize API collections
+- User-friendly interface
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+
+### Windows
+1. Download the latest `.exe` file from [here](https://yourwebsite.com/downloads).
+2. Run the installer and follow the instructions.
+
+### MacOS
+1. Download the `.dmg` file.
+2. Open and drag APIX Desktop to the Applications folder.
+
+### Linux
+1. Download the `.AppImage` file.
+2. Run the following command:
+   ```sh
+   chmod +x APIX-Desktop.AppImage
+   ./APIX-Desktop.AppImage
