@@ -23,6 +23,7 @@ import {
   FaRecycle,
 } from "react-icons/fa";
 import ResponseModal from "./ResponseModal";
+const API_BASE = import.meta.env.VITE_API_BASE || "";
 
 export default function Sidebar({ collections, setCollections, onSelectCollection, responses, setResponse, setResponseModel,
   setSelectedRequest, handleEditRequest, handleDeleteRequest }) {
@@ -54,7 +55,7 @@ export default function Sidebar({ collections, setCollections, onSelectCollectio
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get("/api/collections");
+      const { data } = axios.get(`${API_BASE}/collections`);
       setCollections(data);
     } catch (error) {
       setError("Failed to fetch collections.");
@@ -92,8 +93,7 @@ export default function Sidebar({ collections, setCollections, onSelectCollectio
       const token = localStorage.getItem("token");
       if (!token) return console.error("No authentication token found.");
 
-      const { data: newCollection } = await axios.post(
-        "/api/collections",
+      const { data: newCollection } = await axios.post(`${API_BASE}/collections`,
         { name: `New Collection ${collections.length + 1}`, requests: [] },
         { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
       );
@@ -109,7 +109,7 @@ export default function Sidebar({ collections, setCollections, onSelectCollectio
   const handleRenameCollection = async (_id) => {
     if (!newName.trim()) return;
     try {
-      await axios.put(`/api/collections/${_id}`, { name: newName });
+      await axios.put(`${API_BASE}/collections/${_id}`, { name: newName });
       setCollections((prev) =>
         prev.map((col) => (col._id === _id ? { ...col, name: newName } : col))
       );
@@ -128,7 +128,7 @@ export default function Sidebar({ collections, setCollections, onSelectCollectio
           label: "Yes",
           onClick: async () => {
             try {
-              await axios.delete(`/api/collections/${_id}`);
+              await axios.delete(`${API_BASE}/collections/${_id}`);
               setCollections((prev) => prev.filter((col) => col._id !== _id));
               if (activeCollectionId === _id) setActiveCollectionId(null);
             } catch (error) {

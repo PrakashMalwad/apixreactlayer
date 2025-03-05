@@ -8,6 +8,8 @@ import ResponseModal from "../components/ResponseModal";
 
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+const API_BASE = import.meta.env.VITE_API_BASE || "";
+
 export default function Dashboard() {
   const [selectedCollection, setSelectedCollection] = useState(null);
   const [requests, setRequests] = useState([]);
@@ -29,7 +31,7 @@ export default function Dashboard() {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get("/api/collections");
+      const { data } = await axios.get(`${API_BASE}/api/collections`);
       setCollections(data);
     } catch (error) {
       setError("Failed to fetch collections.");
@@ -82,7 +84,7 @@ export default function Dashboard() {
 
     try {
       const { data } = await axios.post(
-        `/api/collections/add/${selectedCollection._id}`,
+        `${API_BASE}/api/collections/add/${selectedCollection._id}`,
         newRequest
       );
 
@@ -113,7 +115,7 @@ export default function Dashboard() {
       );
 
       // Send the update request to the backend
-      await axios.put(`/api/collections/${collectionId}`, { requests: updatedRequests });
+      await axios.put(`${API_BASE}/api/collections/${collectionId}`, { requests: updatedRequests });
 
       // Update state
       setSelectedCollection((prev) =>
@@ -148,8 +150,9 @@ export default function Dashboard() {
               );
 
               // Update the collection in the backend
-              await axios.put(`/api/collections/${collectionId}`, {
-                requests: updatedRequests, // Send the updated requests array
+              
+              await axios.put(`${API_BASE}/api/collections/${collectionId}`, {
+                requests: updatedRequests,
               });
 
 

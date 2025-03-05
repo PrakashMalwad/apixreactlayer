@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+const API_BASE = import.meta.env.VITE_API_BASE || "";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,10 +13,20 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError(""); // Clear error on input change
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password);
   };
 
   const handleSubmit = async (e) => {
@@ -26,18 +37,30 @@ const Register = () => {
       return;
     }
 
+    if (!validateEmail(formData.email)) {
+      setError("Invalid email format.");
+      return;
+    }
+
+    if (!validatePassword(formData.password)) {
+      setError("Password must be at least 8 characters long and include an uppercase letter and a number.");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
 
+    setLoading(true);
     try {
-      const response = await axios.post("/api/auth/register", formData);
+      const response = await axios.post(`${API_BASE}/api/auth/register`, formData);
       setSuccess("Registration successful! You can now login.");
       setFormData({ name: "", email: "", password: "", confirmPassword: "" });
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed. Try again.");
     }
+    setLoading(false);
   };
 
   return (
@@ -46,7 +69,7 @@ const Register = () => {
         <h2 className="text-white text-2xl mb-4 text-center">Register</h2>
 
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        {success && <p className="text-green-500 text-sm mb-2">{success}</p> }
+        {success && <p className="text-green-500 text-sm mb-2">{success}</p>}
 
         <label className="block text-white mb-1">Name</label>
         <input
@@ -90,9 +113,10 @@ const Register = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
+          disabled={loading}
+          className={`w-full ${loading ? "bg-gray-500" : "bg-blue-500 hover:bg-blue-600"} text-white px-4 py-2 rounded transition`}
         >
-          Register
+          {loading ? "Registering..." : "Register"}
         </button>
 
         <p className="text-gray-400 text-sm mt-3 text-center">

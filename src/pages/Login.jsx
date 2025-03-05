@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
-const API_BASE_URL =  "http://localhost:5000"; // Development mode
+const API_BASE = import.meta.env.VITE_API_BASE || "";
+
+console.log("API_BASE:", API_BASE);
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,9 +13,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Clear previous errors
-
+    console.log(API_BASE);
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
+      
+      const response = await axios.post(`${API_BASE}/auth/login`, { email, password });
 
       console.log("Login successful:", response.data);
       
