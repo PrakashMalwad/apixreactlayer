@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
-const API_BASE_URL =  "http://localhost:5000/"; // Development mode
+const API_BASE_URL =  "http://localhost:5000"; // Development mode
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
