@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
-
+const API_BASE_URL =  "http://localhost:5000/"; // Development mode
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +13,7 @@ const Login = () => {
     setError(""); // Clear previous errors
 
     try {
-      const response = await axios.post("/api/auth/login", { email, password });
+      const response = await axios.post("`${API_BASE_URL}/auth/login`", { email, password });
 
       console.log("Login successful:", response.data);
       
