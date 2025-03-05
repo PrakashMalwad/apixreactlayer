@@ -125,7 +125,6 @@ export default function Dashboard() {
       if (selectedRequest?._id === requestId) {
         setSelectedRequest((prev) => ({ ...prev, name: newName }));
       }
-      window.location.reload();
     } catch (error) {
       console.error("Error renaming request:", error);
       alert("Failed to rename request.");
@@ -160,7 +159,6 @@ export default function Dashboard() {
               if (selectedRequest?._id === requestId) {
                 setSelectedRequest(null);
               }
-              window.location.reload();
 
             } catch (error) {
               console.error("Error deleting request:", error);

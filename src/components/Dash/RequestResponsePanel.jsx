@@ -3,6 +3,7 @@ import axios from "axios";
 import Request from "../Workspace/Request/RequestPanel";
 import Response from "../Workspace/Response/ResponsePanel";
 import { Loader, Save } from "lucide-react";
+const API_BASE = import.meta.env.VITE_API_BASE || "";
 
 export default function RequestResponsePanel({
   selectedCollection,
@@ -64,7 +65,7 @@ export default function RequestResponsePanel({
     );
   
     try {
-      const response = await axios.put(`/api/collections/${selectedCollection._id}`, {
+      const response = await axios.put(`${API_BASE}/collections/${selectedCollection._id}`, {
         requests: updatedRequests,
       });
   
