@@ -11,7 +11,7 @@ APIX Desktop is a simple yet powerful API testing tool built with Electron. It a
 ## Installation
 
 ### Windows
-1. Download the latest `.exe` file from [here](https://yourwebsite.com/downloads).
+1. Download the latest `.zip` file from repo releases
 2. Run the installer and follow the instructions.
 
 ### MacOS
