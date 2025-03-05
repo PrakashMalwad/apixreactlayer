@@ -13,7 +13,7 @@ const Login = () => {
     setError(""); // Clear previous errors
 
     try {
-      const response = await axios.post("`${API_BASE_URL}/auth/login`", { email, password });
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
 
       console.log("Login successful:", response.data);
       
