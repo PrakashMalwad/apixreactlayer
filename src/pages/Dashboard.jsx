@@ -31,7 +31,7 @@ export default function Dashboard() {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get(`${API_BASE}/api/collections`);
+      const { data } = await axios.get(`${API_BASE}/collections`);
       setCollections(data);
     } catch (error) {
       setError("Failed to fetch collections.");
@@ -84,7 +84,7 @@ export default function Dashboard() {
 
     try {
       const { data } = await axios.post(
-        `${API_BASE}/api/collections/add/${selectedCollection._id}`,
+        `${API_BASE}/collections/add/${selectedCollection._id}`,
         newRequest
       );
 
@@ -115,7 +115,7 @@ export default function Dashboard() {
       );
 
       // Send the update request to the backend
-      await axios.put(`${API_BASE}/api/collections/${collectionId}`, { requests: updatedRequests });
+      await axios.put(`${API_BASE}/collections/${collectionId}`, { requests: updatedRequests });
 
       // Update state
       setSelectedCollection((prev) =>
@@ -151,7 +151,7 @@ export default function Dashboard() {
 
               // Update the collection in the backend
               
-              await axios.put(`${API_BASE}/api/collections/${collectionId}`, {
+              await axios.put(`${API_BASE}/collections/${collectionId}`, {
                 requests: updatedRequests,
               });
 

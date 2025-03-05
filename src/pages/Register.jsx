@@ -54,7 +54,7 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post(`${API_BASE}/api/auth/register`, formData);
+      const response = await axios.post(`${API_BASE}/auth/register`, formData);
       setSuccess("Registration successful! You can now login.");
       setFormData({ name: "", email: "", password: "", confirmPassword: "" });
     } catch (err) {
