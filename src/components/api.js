@@ -1,5 +1,5 @@
 // api.js
-import { getAuthHeaders } from './authUtils';
+import { getAuthHeaders } from './authutils';
 
 export const fetchData = async (url, auth) => {
   const headers = getAuthHeaders(auth);

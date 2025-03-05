@@ -1,4 +1,4 @@
-// authUtils.js
+
 export const getAuthHeaders = (auth) => {
     switch (auth.type) {
       case "API Key":
