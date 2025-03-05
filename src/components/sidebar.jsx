@@ -55,7 +55,11 @@ export default function Sidebar({ collections, setCollections, onSelectCollectio
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get(`${API_BASE}/collections`);
+      const { data } = await axios.get(`${API_BASE}/collections`,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, 
+        },
+      });
       setCollections(data);
     } catch (error) {
       setError("Failed to fetch collections.");
