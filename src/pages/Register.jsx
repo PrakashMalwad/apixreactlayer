@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 const API_BASE = import.meta.env.VITE_API_BASE || "";
@@ -14,6 +14,13 @@ const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true" // Check saved mode
+  );
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -64,64 +71,152 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-900">
-      <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-white text-2xl mb-4 text-center">Register</h2>
+    <div
+      className={`flex items-center justify-center h-screen ${
+        darkMode ? "bg-gray-900" : "bg-gray-100"
+      }`}
+    >
+      {/* 🌗 Dark/Light Mode Toggle */}
+      <div className="absolute top-4 right-4">
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className={`px-4 py-2 rounded-lg transition ${
+            darkMode
+              ? "bg-gray-800 text-white hover:bg-gray-700"
+              : "bg-gray-200 text-black hover:bg-gray-300"
+          }`}
+        >
+          {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+        </button>
+      </div>
+
+      <form
+        onSubmit={handleSubmit}
+        className={`${
+          darkMode ? "bg-gray-800" : "bg-purple-200"
+        } p-6 rounded-lg shadow-lg w-96`}
+      >
+        <h2
+          className={`text-2xl mb-4 text-center ${
+            darkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
+          Register
+        </h2>
 
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
         {success && <p className="text-green-500 text-sm mb-2">{success}</p>}
 
-        <label className="block text-white mb-1">Name</label>
+        {/* Name Field */}
+        <label
+          className={`block mb-1 ${
+            darkMode ? "text-white" : "text-gray-800"
+          }`}
+        >
+          Name
+        </label>
         <input
           type="text"
           name="name"
           placeholder="Enter your name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full mb-3 p-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`w-full mb-3 p-2 rounded focus:outline-none focus:ring-2 ${
+            darkMode
+              ? "bg-gray-700 text-white focus:ring-purple-500"
+              : "bg-white text-black focus:ring-purple-500"
+          }`}
         />
 
-        <label className="block text-white mb-1">Email</label>
+        {/* Email Field */}
+        <label
+          className={`block mb-1 ${
+            darkMode ? "text-white" : "text-gray-800"
+          }`}
+        >
+          Email
+        </label>
         <input
           type="email"
           name="email"
           placeholder="Enter your email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full mb-3 p-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`w-full mb-3 p-2 rounded focus:outline-none focus:ring-2 ${
+            darkMode
+              ? "bg-gray-700 text-white focus:ring-purple-500"
+              : "bg-white text-black focus:ring-purple-500"
+          }`}
         />
 
-        <label className="block text-white mb-1">Password</label>
+        {/* Password Field */}
+        <label
+          className={`block mb-1 ${
+            darkMode ? "text-white" : "text-gray-800"
+          }`}
+        >
+          Password
+        </label>
         <input
           type="password"
           name="password"
           placeholder="Enter your password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full mb-3 p-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`w-full mb-3 p-2 rounded focus:outline-none focus:ring-2 ${
+            darkMode
+              ? "bg-gray-700 text-white focus:ring-purple-500"
+              : "bg-white text-black focus:ring-purple-500"
+          }`}
         />
 
-        <label className="block text-white mb-1">Confirm Password</label>
+        {/* Confirm Password Field */}
+        <label
+          className={`block mb-1 ${
+            darkMode ? "text-white" : "text-gray-800"
+          }`}
+        >
+          Confirm Password
+        </label>
         <input
           type="password"
           name="confirmPassword"
           placeholder="Confirm your password"
           value={formData.confirmPassword}
           onChange={handleChange}
-          className="w-full mb-4 p-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`w-full mb-4 p-2 rounded focus:outline-none focus:ring-2 ${
+            darkMode
+              ? "bg-gray-700 text-white focus:ring-purple-500"
+              : "bg-white text-black focus:ring-purple-500"
+          }`}
         />
 
+        {/* Register Button */}
         <button
           type="submit"
           disabled={loading}
-          className={`w-full ${loading ? "bg-gray-500" : "bg-blue-500 hover:bg-blue-600"} text-white px-4 py-2 rounded transition`}
+          className={`w-full flex items-center justify-center ${
+            loading
+              ? "bg-purple-700 cursor-not-allowed"
+              : "bg-purple-500 hover:bg-purple-600"
+          } text-white px-4 py-2 rounded transition`}
         >
           {loading ? "Registering..." : "Register"}
         </button>
 
-        <p className="text-gray-400 text-sm mt-3 text-center">
+        {/* Login Link */}
+        <p
+          className={`text-sm mt-3 text-center ${
+            darkMode ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           Already have an account?{" "}
-          <Link to="/" className="text-blue-400 hover:underline">
+          <Link
+            to="/"
+            className={`hover:underline ${
+              darkMode ? "text-purple-400" : "text-purple-600"
+            }`}
+          >
             Login
           </Link>
         </p>
